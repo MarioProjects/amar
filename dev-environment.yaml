@@ -1,0 +1,11 @@
+name: ama-dev
+channels:
+  - defaults
+dependencies:
+  - python=3.12.3
+  - pip
+  - pip:
+    - ollama==0.1.9
+    - chromadb==0.5.0
+    - jupyter==1.0.0
+    - notebook==7.1.3

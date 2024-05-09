@@ -1,0 +1,13 @@
+llm:
+  hub: ollama
+  model: mistral
+  max_new_tokens: 512
+  context_window: 3900
+  temperature: 0.1     #The temperature of the model. Increasing the temperature will make the model answer more creatively. A value of 0.1 would be more factual. (Default: 0.1)
+
+embedding:
+  hub: ollama
+  model: nomic-embed-text
+
+vectorstore:
+  database: chromadb
