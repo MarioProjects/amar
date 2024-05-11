@@ -188,3 +188,6 @@ cython_debug/
 
 # logging
 wandb
+
+# temp side projects
+anon

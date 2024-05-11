@@ -49,8 +49,14 @@ class OllamaHelper:
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
             )
-            time.sleep(5)  # wait for server to start
-            ollama_running = web_healthcheck(self.base_url)
+
+            retries = 5
+            while not ollama_running and retries > 0:
+                retries -= 1
+                ollama_running = web_healthcheck(self.base_url)
+                if not ollama_running:
+                    time.sleep(2)  # wait for server to start
+
             if not ollama_running:
                 raise Exception("Unable to start Ollama server")
 
