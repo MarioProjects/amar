@@ -13,26 +13,21 @@ class OllamaLLM(LLMModel):
         self.helper = OllamaHelper(base_url=base_url, verbose=True)
         self.helper.pull_model(model)
 
-    def ask(self, query: str) -> LLMResponse:
+    def ask(self, query: str | list[dict]) -> LLMResponse:
         """
         Implementation of get_embedding method for OllamaEmbedding.
 
         Args:
-            query (str):
+            query (str | list[dict]): Simple text or list of dictionaries with role and content.
 
         Returns:
             Embedding: Embedding of the input text.
         """
         try:
-            response = ollama.chat(
-                model=self.model,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": query,
-                    },
-                ],
-            )
+            if isinstance(query, str):
+                query = [{"role": "user", "content": query}]
+            print("Query:", query)
+            response = ollama.chat(model=self.model, messages=query)
             return response["message"]["content"]
         except requests.exceptions.RequestException as e:
             raise Exception(f"Error connecting to Ollama model: {e}") from e

@@ -9,5 +9,6 @@ dependencies:
     - chromadb==0.5.0
     - pymupdf==1.24.3
     - surya-ocr==0.4.4
+    - streamlit==1.34.0
     - jupyter==1.0.0
     - notebook==7.1.3
