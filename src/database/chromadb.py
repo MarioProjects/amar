@@ -1,10 +1,3 @@
-"""
-- Chromab:
-    - Creating, loading, removing a database
-    - Insert documents
-    - Make a search top similars
-"""
-
 import chromadb
 
 from src.embeddings.types import Embedding
@@ -20,7 +13,12 @@ class ChromaDB(VectorDatabase):
             name (str): Name of the database.
         """
         super().__init__(path=path, name=name)
-        self.db_client = self.load_or_create()
+        self.load_or_create()
+
+    @property
+    def num_documents(self) -> int:
+        """Get the number of documents in the database."""
+        return self.collection.count()
 
     def load_or_create(self) -> None:
         """Load the database."""
@@ -32,6 +30,7 @@ class ChromaDB(VectorDatabase):
     def remove(self) -> None:
         """Remove the database collection."""
         self.db_client.delete_collection(name=self.name)
+        self.load_or_create()  # Recreate empty the collection
 
     def insert(self, document: CollectionItem) -> None:
         """
@@ -50,9 +49,7 @@ class ChromaDB(VectorDatabase):
             ids=[document.id],
         )
 
-    def search_top_similars(
-        self, query_embedding: Embedding, top_k: int
-    ) -> list[CollectionItem]:
+    def search(self, query_embedding: Embedding, top_k: int) -> list[CollectionItem]:
         """
         Search for the top k similar documents.
 

@@ -194,3 +194,7 @@ anon
 
 # database
 chromadb/
+
+# files inside tmp minus .gitkeep
+tmp/*
+!tmp/.gitkeep

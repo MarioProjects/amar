@@ -20,13 +20,17 @@ class LLMModel:
         self.base_url: str = base_url
 
     @abstractmethod
-    def get_embedding(self, query: str) -> LLMResponse:
+    def ask(
+        self, query: str | list[dict], query_context: list[dict] = None
+    ) -> LLMResponse:
         """
         Abstract method to ask the model a question.
 
         Args:
-            query (str): Input text to generate the response from.
+            query (str | list[dict]): Simple text or list of dictionaries with role and content.
+            query_context (list[dict], optional): Context of the query. Defaults to None.
 
         Returns:
-            LLMResponse: Response of the input text.
+            LLMResponse: Response from the model.
         """
+        pass
