@@ -1,13 +1,20 @@
 llm:
   hub: ollama
-  model: mistral
-  max_new_tokens: 512
-  context_window: 3900
-  temperature: 0.1     #The temperature of the model. Increasing the temperature will make the model answer more creatively. A value of 0.1 would be more factual. (Default: 0.1)
+  model: phi3
+  api_url: http://localhost:11434
 
 embedding:
   hub: ollama
   model: nomic-embed-text
+  top_k: 3
+  api_url: http://localhost:11434
 
 vectorstore:
   database: chromadb
+  path: chromadb
+  name: documents
+
+readers:
+  enable_ocr: True
+  chunk_size: 1024
+  chunk_overlap: 256

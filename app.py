@@ -11,6 +11,7 @@ streamlit run app.py
 
 import streamlit as st
 
+from src.helpers.config import Config
 from src.processing.readers import PDFReader
 from src.processing.chunking import SymbolChunker
 from src.database.chromadb import ChromaDB
@@ -21,25 +22,25 @@ from src.llm.ollama import OllamaLLM
 ###########################################################################################
 ##################################### Configurations ######################################
 ###########################################################################################
-VERBOSE = True
-ENABLE_OCR = True
-CHUNK_SIZE = 1024
-CHUNK_OVERLAP = 256
-DATABASE_PATH = "chromadb"
-DATABASE_NAME = "documents"
-EMBEDDING_MODEL = "qwen:0.5b"
-RETRIVE_TOP_K = 3
-OLLAMA_SERVER = "http://localhost:11434"
+CONFIG_PATH = "configs/settings-ollama.yaml"
+CONFIG = Config(CONFIG_PATH)
 
 
 # https://docs.streamlit.io/develop/concepts/architecture/caching
 @st.cache_resource(show_spinner="Loading models...")
 def load_models():
-    pdf_reader = PDFReader(enable_ocr=ENABLE_OCR)
-    chunker = SymbolChunker(chars_limit=CHUNK_SIZE, overlap=CHUNK_OVERLAP)
-    database = ChromaDB(path=DATABASE_PATH, name=DATABASE_NAME)
-    embedder = OllamaEmbedding(model=EMBEDDING_MODEL, base_url=OLLAMA_SERVER)
-    llm = OllamaLLM(model=EMBEDDING_MODEL, base_url=OLLAMA_SERVER)
+    pdf_reader = PDFReader(enable_ocr=CONFIG.readers["enable_ocr"])
+    chunker = SymbolChunker(
+        chars_limit=CONFIG.readers["chunk_size"],
+        overlap=CONFIG.readers["chunk_overlap"],
+    )
+    database = ChromaDB(
+        path=CONFIG.vectorstore["path"], name=CONFIG.vectorstore["name"]
+    )
+    embedder = OllamaEmbedding(
+        model=CONFIG.embedding["model"], base_url=CONFIG.embedding["api_url"]
+    )
+    llm = OllamaLLM(model=CONFIG.llm["model"], base_url=CONFIG.llm["api_url"])
     return pdf_reader, chunker, database, embedder, llm
 
 
@@ -105,7 +106,7 @@ if uploaded_file is not None:
 ###########################################################################################
 ############################## Main Graphical Interface ###################################
 ###########################################################################################
-st.title("💬 Ask Me Anything")
+st.write("# 💬 Ask Me Anything *with RAG*")
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
@@ -117,12 +118,13 @@ for msg in st.session_state.messages:
 
 if query := st.chat_input():
     query_embedding = embedder.get_embedding(query)
-    query_context = database.search(query_embedding, top_k=RETRIVE_TOP_K)
+    query_context = database.search(query_embedding, top_k=CONFIG.embedding["top_k"])
 
     # print the query context
-    for item in query_context:
-        st.write(f"**{item.document_path}**")
-        st.write(item.text)
+    with st.expander("Query context"):
+        for item in query_context:
+            st.write(f"**{item.document_path}: {item.location}**")
+            st.write(item.text)
 
     st.session_state.messages.append({"role": "user", "content": query})
     st.chat_message("user").write(query)
