@@ -14,6 +14,11 @@
 
 The objective of this project is to create a simple and easy to use tool that allows users to ask questions about local data. It works by serving local LLM models and a RAG model to answer questions about the data.
 
+The following diagram shows the architecture of the project:
+
+![AMAR Flow](./misc/flow.png)
+
+
 ## 2. Repository Structure
 
 The repository is structured as follows:
@@ -69,6 +74,9 @@ streamlit run app.py
 ```
 
 ### 4.1. Demo
+
+The following is a demo of the web app:
+
 
 ## 5. Future Work
 
