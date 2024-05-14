@@ -5,9 +5,9 @@
 1. [Objective](#Objective)
 2. [Repository Structure](#Repository-Structure)
 3. [Virtual Environment](#Virtual-Environment)
-    3.1. [Tools used](#Tools-used)
+    1. [Tools used](#Tools-used)
 4. [Running the Web App](#Running-the-Web-App)
-    4.1. [Demo](#Demo)
+    1. [Demo](#Demo)
 5. [Future Work](#Future-Work)
 
 ## 1. Objective
