@@ -78,6 +78,11 @@ streamlit run app.py
 The following is a demo of the web app:
 
 
+
+https://github.com/MarioProjects/amar/assets/23385329/87ff9fa2-dbbc-4d7b-8d75-1bd7385634a2
+
+
+
 ## 5. Future Work
 
 - [ ] Add more models to the app: Hugging Face models, OpenAI models, etc.
