@@ -5,14 +5,19 @@
 1. [Objective](#Objective)
 2. [Repository Structure](#Repository-Structure)
 3. [Virtual Environment](#Virtual-Environment)
-    3.1. [Tools used](#Tools-used)
+    1. [Tools used](#Tools-used)
 4. [Running the Web App](#Running-the-Web-App)
-    4.1. [Demo](#Demo)
+    1. [Demo](#Demo)
 5. [Future Work](#Future-Work)
 
 ## 1. Objective
 
 The objective of this project is to create a simple and easy to use tool that allows users to ask questions about local data. It works by serving local LLM models and a RAG model to answer questions about the data.
+
+The following diagram shows the architecture of the project:
+
+![AMAR Flow](./misc/flow.png)
+
 
 ## 2. Repository Structure
 
@@ -69,6 +74,14 @@ streamlit run app.py
 ```
 
 ### 4.1. Demo
+
+The following is a demo of the web app:
+
+
+
+https://github.com/MarioProjects/amar/assets/23385329/87ff9fa2-dbbc-4d7b-8d75-1bd7385634a2
+
+
 
 ## 5. Future Work
 
