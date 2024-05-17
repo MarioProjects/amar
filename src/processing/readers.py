@@ -27,12 +27,12 @@ class Reader:
         """Initialize the Reader class."""
 
     @abstractmethod
-    def get_text(self) -> str:
+    def get_text(self) -> list[Extraction]:
         """
         Abstract method to get the text from the file.
 
         Returns:
-            str: Text from the file.
+            list[Extraction]: List of extractions per page.
         """
 
 
